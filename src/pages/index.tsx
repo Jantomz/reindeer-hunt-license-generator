@@ -8,6 +8,34 @@ export default function Home() {
     HOMEROOM: "homeroom",
   };
 
+  const LEFT_BOX_CENTER = 57.5;
+  const RIGHT_BOX_CENTER = 152.5;
+  const LEFT_BOX_RIGHT_MARGIN = 18;
+  const RIGHT_BOX_RIGHT_MARGIN = 113;
+  const LEFT_BOX_SECOND_MARGIN = 60;
+  const RIGHT_BOX_SECOND_MARGIN = 155;
+  const BOX_TOP_LEFTX = 10;
+  const BOX_TOP_LEFTY = 10;
+  const BOX_TOP_RIGHTX = 200;
+  const BOX_TOP_RIGHTY = 10;
+
+  const BOX_BOTTOM_LEFTX = 10;
+  const BOX_BOTTOM_LEFTY = 55;
+  const BOX_BOTTOM_RIGHTX = 200;
+  const BOX_BOTTOM_RIGHTY = 55;
+
+  const MEDIUM_FONT = 8;
+  const SMALL_FONT = 6;
+  const LARGE_FONT = 10;
+  const XLARGE_FONT = 12;
+
+  const TITLE_Y = 18;
+  const SUBTITLE_Y = 25;
+  const INFO_Y = 30;
+  const FOOTER_Y = 50;
+
+  const CENTER = 105;
+
   return (
     <>
       <Head>
@@ -77,6 +105,7 @@ export default function Home() {
     let requirements1;
     let requirements2;
     let j = 0;
+    let incrementBetweenBoxes;
     let even = true;
     let firstSet: any = [];
     let secondSet: any = [];
@@ -105,17 +134,18 @@ export default function Home() {
         for (let i = 0; i < firstSet.length; i++) {
           j = i % 6;
 
+          incrementBetweenBoxes = j * 45;
+
           hunter = firstSet[i].name;
           reindeer = secondSet[i].name;
 
           hunterHR = firstSet[i].homeroom;
           reindeerHR = secondSet[i].homeroom;
 
-          requirements1 = `To be entered into the next round, you must successfully capture ${reindeer}`;
-          requirements2 = `To be entered into the next round, you must successfully capture ${hunter}`;
+          requirements1 = `To be entered into the next round, you must successfully\ncapture ${reindeer} by 2:30PM ${endDate}`;
+          requirements2 = `To be entered into the next round, you must successfully\ncapture ${hunter} by 2:30PM ${endDate}`;
 
           instructions1 = `This license permits ${hunter} (${hunterHR}) to hunt ${reindeer} (${reindeerHR}) in round ${round} of Sacred Heart's ${anniversary} Annual Reindeer Hunt.`;
-
           instructions2 = `This license permits ${reindeer} (${reindeerHR}) to hunt ${hunter} (${hunterHR}) in round ${round} of Sacred Heart's ${anniversary} Annual Reindeer Hunt.`;
 
           if (i == 0) {
@@ -131,51 +161,136 @@ export default function Home() {
           }
 
           // Writing title
-          doc.setFontSize(12);
+          doc.setFontSize(XLARGE_FONT);
           doc.setTextColor("#FF4821");
           doc.setFont(undefined, "bold");
 
-          doc.text(title, 55, 18 + j * 45, "center");
-          doc.text(title, 150, 18 + j * 45, "center");
+          doc.text(
+            title,
+            LEFT_BOX_CENTER,
+            TITLE_Y + incrementBetweenBoxes,
+            "center",
+          );
+          doc.text(
+            title,
+            RIGHT_BOX_CENTER,
+            TITLE_Y + incrementBetweenBoxes,
+            "center",
+          );
 
           doc.setFont(undefined, "normal");
 
           doc.setTextColor("#000");
-          doc.setFontSize(8);
+          doc.setFontSize(MEDIUM_FONT);
 
           // Writing instructions
-          doc.text(splitInstructions1, 18, 30 + j * 45);
-          doc.text(splitInstructions2, 113, 30 + j * 45);
+          doc.text(
+            splitInstructions1,
+            LEFT_BOX_RIGHT_MARGIN,
+            INFO_Y + incrementBetweenBoxes,
+          );
+          doc.text(
+            splitInstructions2,
+            RIGHT_BOX_RIGHT_MARGIN,
+            INFO_Y + incrementBetweenBoxes,
+          );
+
+          doc.setFontSize(SMALL_FONT);
+
+          doc.text(
+            requirements1,
+            LEFT_BOX_CENTER,
+            FOOTER_Y + incrementBetweenBoxes,
+            "center",
+          );
+          doc.text(
+            requirements2,
+            RIGHT_BOX_CENTER,
+            FOOTER_Y + incrementBetweenBoxes,
+            "center",
+          );
 
           // Writing round title
-          doc.setFontSize(10);
+          doc.setFontSize(LARGE_FONT);
           doc.setFont(undefined, "bold");
 
-          doc.text("ROUND " + round, 18, 25 + j * 45);
-          doc.text("ROUND " + round, 113, 25 + j * 45);
+          doc.text(
+            "ROUND " + round,
+            LEFT_BOX_RIGHT_MARGIN,
+            SUBTITLE_Y + incrementBetweenBoxes,
+          );
+          doc.text(
+            "ROUND " + round,
+            RIGHT_BOX_RIGHT_MARGIN,
+            SUBTITLE_Y + incrementBetweenBoxes,
+          );
 
           // Writing hunting period title
-          doc.text("Hunting Period:", 60, 25 + j * 45);
-          doc.text("Hunting Period:", 155, 25 + j * 45);
+          doc.text(
+            "Hunting Period:",
+            LEFT_BOX_SECOND_MARGIN,
+            SUBTITLE_Y + incrementBetweenBoxes,
+          );
+          doc.text(
+            "Hunting Period:",
+            RIGHT_BOX_SECOND_MARGIN,
+            SUBTITLE_Y + incrementBetweenBoxes,
+          );
 
           // Writing hunting period
 
           doc.setFont(undefined, "normal");
-          doc.setFontSize(8);
+          doc.setFontSize(MEDIUM_FONT);
 
-          doc.text(huntingPeriod, 60, 30 + j * 45);
-          doc.text(huntingPeriod, 155, 30 + j * 45);
+          doc.text(
+            huntingPeriod,
+            LEFT_BOX_SECOND_MARGIN,
+            INFO_Y + incrementBetweenBoxes,
+          );
+          doc.text(
+            huntingPeriod,
+            RIGHT_BOX_SECOND_MARGIN,
+            INFO_Y + incrementBetweenBoxes,
+          );
 
-          // Left Box
-          doc.line(10, 10 + j * 45, 105, 10 + j * 45); // (x, y, x, y)
-          doc.line(10, 55 + j * 45, 105, 55 + j * 45); // bottom
-          doc.line(10, 10 + j * 45, 10, 55 + j * 45); // left
-          doc.line(105, 10 + j * 45, 105, 55 + j * 45); // right
+          // Boxes
 
-          // Right Box
-          doc.line(105, 10 + j * 45, 200, 10 + j * 45);
-          doc.line(105, 55 + j * 45, 200, 55 + j * 45);
-          doc.line(200, 10 + j * 45, 200, 55 + j * 45);
+          // top line
+          doc.line(
+            BOX_TOP_LEFTX,
+            BOX_TOP_LEFTY + incrementBetweenBoxes,
+            BOX_TOP_RIGHTX,
+            BOX_TOP_RIGHTY + incrementBetweenBoxes,
+          );
+
+          // bottom line
+          doc.line(
+            BOX_BOTTOM_LEFTX,
+            BOX_BOTTOM_LEFTY + incrementBetweenBoxes,
+            BOX_BOTTOM_RIGHTX,
+            BOX_BOTTOM_RIGHTY + incrementBetweenBoxes,
+          );
+
+          // left line
+          doc.line(
+            BOX_TOP_LEFTX,
+            BOX_TOP_LEFTY + incrementBetweenBoxes,
+            BOX_BOTTOM_LEFTX,
+            BOX_BOTTOM_LEFTY + incrementBetweenBoxes,
+          );
+          // center line
+          doc.line(
+            CENTER,
+            BOX_TOP_RIGHTY + incrementBetweenBoxes,
+            CENTER,
+            BOX_BOTTOM_RIGHTY + incrementBetweenBoxes,
+          ); // right line
+          doc.line(
+            BOX_TOP_RIGHTX,
+            BOX_TOP_RIGHTY + incrementBetweenBoxes,
+            BOX_BOTTOM_RIGHTX,
+            BOX_BOTTOM_RIGHTY + incrementBetweenBoxes,
+          );
         }
         doc.save("Test");
       });
