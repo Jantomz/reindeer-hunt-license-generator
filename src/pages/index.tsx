@@ -1,12 +1,16 @@
 import Head from "next/head";
 import readXlsxFile from "read-excel-file";
 import { jsPDF } from "jspdf";
+import { useState } from "react";
 
 export default function Home() {
   const map = {
     FULL_NAME: "name",
     HOMEROOM: "homeroom",
   };
+
+  const [round, setRound] = useState(0);
+  const [endDate, setEndDate] = useState(new Date());
 
   const LEFT_BOX_CENTER = 57.5;
   const RIGHT_BOX_CENTER = 152.5;
@@ -67,6 +71,18 @@ export default function Home() {
                 className="w-64 font-medium"
               ></input>
             </div>
+            <input
+              type="number"
+              value={round}
+              max="9"
+              min="1"
+              onChange={(event) => {
+                setRound(parseInt(event.target.value));
+              }}
+              placeholder="Round#"
+              className="w-20 p-1"
+            ></input>
+            <input type="date" placeholder="End of Round Date"></input>
 
             <button
               type="submit"
@@ -91,7 +107,6 @@ export default function Home() {
 
     // need to change to variables later when it needs to change
     const title = "SHHS REINDEER HUNTING LICENSE";
-    const round = "1";
     const anniversary = "10th";
     let hunter = "Jaden Zhang";
     let reindeer = "Samantha Adams";
