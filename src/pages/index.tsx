@@ -81,6 +81,7 @@ export default function Home() {
                   parseInt(event.target.value) > 9 ||
                   parseInt(event.target.value) < 1
                 ) {
+                  // @ts-ignore
                   document.getElementById("roundInput").value = 1;
                 }
                 setRound(parseInt(event.target.value));
