@@ -36,6 +36,8 @@ export default function Home() {
 
   const CENTER = 105;
 
+  const FONT = "helvetica";
+
   return (
     <>
       <Head>
@@ -84,19 +86,19 @@ export default function Home() {
 
   function handleSubmit() {
     // Need to give different options to users for formatting their cards
-    const fileInput = document.getElementById("input");
-    const selectedFile = fileInput.files[0];
+    const fileInput = document.getElementById("input") as HTMLInputElement;
     const doc = new jsPDF("p", "mm", [297, 210]);
 
-    let title = "SHHS REINDEER HUNTING LICENSE";
-    let round = "1";
-    let anniversary = "10th";
+    // need to change to variables later when it needs to change
+    const title = "SHHS REINDEER HUNTING LICENSE";
+    const round = "1";
+    const anniversary = "10th";
     let hunter = "Jaden Zhang";
     let reindeer = "Samantha Adams";
     let hunterHR = "1201";
     let reindeerHR = "1202";
-    let endDate = "Friday, November 10";
-    let huntingPeriod =
+    const endDate = "Friday, November 10";
+    const huntingPeriod =
       "Before School: 7:30 - 8:05AM\nLunch: 10:50 - 11:30AM\nAfter School: 2:10 - 2:30PM";
     let instructions1;
     let instructions2;
@@ -107,13 +109,15 @@ export default function Home() {
     let j = 0;
     let incrementBetweenBoxes;
     let even = true;
-    let firstSet: any = [];
-    let secondSet: any = [];
+    const firstSet: any = [];
+    const secondSet: any = [];
     doc.setDrawColor("#FF4821");
 
     // testing git commits
     try {
-      // Need to format the rows and values of receiving the information
+      // @ts-ignore
+      const selectedFile = fileInput.files[0]; // Need to format the rows and values of receiving the information
+      // @ts-ignore
       readXlsxFile(selectedFile, { map }).then(({ rows }) => {
         rows.forEach((element) => {
           if (even) {
@@ -163,22 +167,26 @@ export default function Home() {
           // Writing title
           doc.setFontSize(XLARGE_FONT);
           doc.setTextColor("#FF4821");
-          doc.setFont(undefined, "bold");
+          doc.setFont(FONT, "bold");
 
           doc.text(
             title,
             LEFT_BOX_CENTER,
             TITLE_Y + incrementBetweenBoxes,
+            // @ts-ignore
             "center",
           );
+
           doc.text(
             title,
             RIGHT_BOX_CENTER,
             TITLE_Y + incrementBetweenBoxes,
+            // @ts-ignore
             "center",
           );
 
-          doc.setFont(undefined, "normal");
+          // @ts-ignore
+          doc.setFont(FONT, "normal");
 
           doc.setTextColor("#000");
           doc.setFontSize(MEDIUM_FONT);
@@ -201,18 +209,21 @@ export default function Home() {
             requirements1,
             LEFT_BOX_CENTER,
             FOOTER_Y + incrementBetweenBoxes,
+            // @ts-ignore
             "center",
           );
+
           doc.text(
             requirements2,
             RIGHT_BOX_CENTER,
             FOOTER_Y + incrementBetweenBoxes,
+            // @ts-ignore
             "center",
           );
 
           // Writing round title
           doc.setFontSize(LARGE_FONT);
-          doc.setFont(undefined, "bold");
+          doc.setFont(FONT, "bold");
 
           doc.text(
             "ROUND " + round,
@@ -239,7 +250,7 @@ export default function Home() {
 
           // Writing hunting period
 
-          doc.setFont(undefined, "normal");
+          doc.setFont(FONT, "normal");
           doc.setFontSize(MEDIUM_FONT);
 
           doc.text(
