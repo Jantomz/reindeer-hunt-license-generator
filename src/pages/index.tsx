@@ -10,7 +10,7 @@ export default function Home() {
   };
 
   const [round, setRound] = useState(0);
-  const [endDate, setEndDate] = useState(new Date());
+  const [endDate, setEndDate] = useState("");
 
   const LEFT_BOX_CENTER = 57.5;
   const RIGHT_BOX_CENTER = 152.5;
@@ -79,10 +79,26 @@ export default function Home() {
               max="9"
               min="1"
               onChange={(event) => {
+                if (
+                  parseInt(event.target.value) > 9 ||
+                  parseInt(event.target.value) < 1
+                ) {
+                  // @ts-ignore
+                  document.getElementById("roundInput").value = 1;
+                }
                 setRound(parseInt(event.target.value));
               }}
+              id="roundInput"
               placeholder="Round#"
-              className="w-20 p-1"
+              className="w-32 rounded-md bg-slate-100/20 p-1 text-center text-white placeholder-white"
+            ></input>
+            <input
+              type="text"
+              placeholder="End of Round Date"
+              onChange={(event) => {
+                setEndDate(event.target.value);
+              }}
+              className="w-42 rounded-md bg-slate-100/20 p-1 text-center  text-white placeholder-white"
             ></input>
             <input
               type="date"
@@ -97,6 +113,14 @@ export default function Home() {
             >
               Download Cards
             </button>
+            <a
+              href="https://docs.google.com/spreadsheets/d/1wWk-H4WL2gIsGfYt6WQW6qsXQEmYr_p-d5sAwJlqpqM/edit?usp=sharing"
+              target="_blank"
+            >
+              <button className="mt-12 rounded-md bg-red-600/30 p-3 font-medium text-white hover:bg-red-500 active:bg-red-400 active:text-slate-500">
+                View Spreadsheet Template
+              </button>
+            </a>
           </div>
         </div>
         <footer className="pb-2 text-center">
@@ -114,13 +138,12 @@ export default function Home() {
     // need to change to variables later when it needs to change
     const title = "SHHS REINDEER HUNTING LICENSE";
     const anniversary = "10th";
-    let hunter = "Jaden Zhang";
-    let reindeer = "Samantha Adams";
-    let hunterHR = "1201";
-    let reindeerHR = "1202";
-    const endDate = "Friday, November 10";
     const huntingPeriod =
       "Before School: 7:30 - 8:05AM\nLunch: 10:50 - 11:30AM\nAfter School: 2:10 - 2:30PM";
+    let hunter;
+    let reindeer;
+    let hunterHR;
+    let reindeerHR;
     let instructions1;
     let instructions2;
     let splitInstructions1;
@@ -156,6 +179,11 @@ export default function Home() {
             homeroom: "FREE PASS",
           });
         }
+
+        // Shuffle array of names
+        shuffleArray(firstSet);
+        shuffleArray(secondSet);
+
         for (let i = 0; i < firstSet.length; i++) {
           j = i % 6;
 
@@ -167,8 +195,8 @@ export default function Home() {
           hunterHR = firstSet[i].homeroom;
           reindeerHR = secondSet[i].homeroom;
 
-          requirements1 = `To be entered into the next round, you must successfully\ncapture ${reindeer} by 2:30PM ${endDate}`;
-          requirements2 = `To be entered into the next round, you must successfully\ncapture ${hunter} by 2:30PM ${endDate}`;
+          requirements1 = `To be entered into the next round, you must successfully\ncapture ${reindeer} by 2:30PM on ${endDate}`;
+          requirements2 = `To be entered into the next round, you must successfully\ncapture ${hunter} by 2:30PM on ${endDate}`;
 
           instructions1 = `This license permits ${hunter} (${hunterHR}) to hunt ${reindeer} (${reindeerHR}) in round ${round} of Sacred Heart's ${anniversary} Annual Reindeer Hunt.`;
           instructions2 = `This license permits ${reindeer} (${reindeerHR}) to hunt ${hunter} (${hunterHR}) in round ${round} of Sacred Heart's ${anniversary} Annual Reindeer Hunt.`;
@@ -328,6 +356,13 @@ export default function Home() {
       });
     } catch (e) {
       console.log(e);
+    }
+  }
+
+  function shuffleArray(array: any) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
     }
   }
 }
