@@ -55,12 +55,14 @@ export default function Home() {
       <main className="min-h-screen bg-gradient-to-b from-[#ff4646] to-[#ce5353]">
         <div className="flex flex-col items-center justify-center py-12">
           <img src="ReindeerHuntLogo.png" className="w-1/12"></img>
-          <h1 className="text-7xl font-medium text-white">The Reindeer Hunt</h1>
-          <h4 className="text-xl font-thin text-green-300">
+          <h1 className="text-7xl font-medium text-white max-md:text-3xl">
+            The Reindeer Hunt
+          </h1>
+          <h4 className="text-xl font-thin text-green-300 max-md:text-lg">
             Application to create Reindeer Hunt cards
           </h4>
           <div className="flex flex-col items-center justify-center gap-5 p-24">
-            <h2 className="text-center text-4xl font-medium text-gray-300">
+            <h2 className="text-center text-4xl font-medium text-gray-300 max-md:text-xl">
               Upload your Spreadsheet File
             </h2>
             <div className="flex items-center justify-center gap-16 p-12">
@@ -82,7 +84,11 @@ export default function Home() {
               placeholder="Round#"
               className="w-20 p-1"
             ></input>
-            <input type="date" placeholder="End of Round Date"></input>
+            <input
+              type="date"
+              placeholder="End of Round Date"
+              className="w-40 p-1"
+            ></input>
 
             <button
               type="submit"
